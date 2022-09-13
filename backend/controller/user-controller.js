@@ -39,6 +39,9 @@ export const signup = async (req, res, next) => {
         email,
         password,
         blogs: [],
+        following: [],
+        follower: [],
+        block: [],
     })
 
     try{
@@ -68,8 +71,6 @@ export const login = async (req, res, next) => {
         return res.status(400).json({message: "User don't exist"})
     }
 
-    console.log(existingUser)
-
     const isPasswordCorrect = password == existingUser.password ? true : false
     if(!isPasswordCorrect){
         return res.status(400).json({message:"Incorrect password"})
@@ -77,4 +78,64 @@ export const login = async (req, res, next) => {
 
     return res.status(200).json({message:"Login Successful", user: existingUser})
     
+}
+
+
+export const getByEmail = async (req, res, next) => {
+    const { email } = req.body
+
+    let existingUser
+
+    try{
+        existingUser = await User.findOne({email: email})
+    } catch (err) {
+        console.log(err)
+    }
+
+    if(!existingUser){
+        return res.status(400).json({message: "User don't exist"})
+    }
+
+    return res.status(200).json({user: existingUser})
+    
+}
+
+
+export const blockUser = async(req, res, next) => {
+    const {user, userToBlock} = req.body
+
+    let existingUser, updatedUser
+
+    try{
+        existingUser = await User.findOne({email: user})
+    } catch (err) {
+        console.log(err)
+    }
+
+    if(!existingUser){
+        return res.status(400).json({message: "No user of such name existed"})
+    }
+
+    let id = existingUser._id.valueOf()
+    let newBlock = existingUser.block
+    if(!newBlock.includes(userToBlock)){
+        newBlock.push(userToBlock)
+    }else{
+        console.log("Already Block")
+    }
+ 
+
+    try{
+       updatedUser = await User.findByIdAndUpdate(id, {block: newBlock})
+    }catch (err) {
+        console.log(err)
+    }
+    
+   
+
+    if(!updatedUser){
+        return res.status(400).json({message: "Error Update"})
+    }
+
+    return res.status(200).json({success:true})
 }

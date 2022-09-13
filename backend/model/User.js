@@ -23,7 +23,14 @@ const userSchema = new Schema({
             ref: "Blog",
             required: true
         }
-    ]
+    ],
+    following: [],
+    follower: [],
+    block: [
+        {
+            type: String
+        }
+    ],
 })
 
 export default mongoose.model("User", userSchema)

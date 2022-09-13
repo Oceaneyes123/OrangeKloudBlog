@@ -16,11 +16,11 @@ const Blogs = () => {
   return (
     <div className="main blog-container">
       {blogs && blogs.map((blog, index) => (
-      
           <Blog 
           title={blog.title}
           description={blog.description}
           userName={blog.user.name}
+          user={blog.user}
           key={index}
          />
         
