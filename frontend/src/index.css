@@ -16,3 +16,30 @@ code {
 .main{
   margin-top: 75px;
 }
+
+.card{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.blog-container{
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 300px;
+  width: 300px;
+}
+
+.blog-title{
+  font-weight: 700;
+}
+
+.blog-user{
+  font-size: smaller;
+}
+
+.blog-description{
+  margin-top: 20px;
+}
