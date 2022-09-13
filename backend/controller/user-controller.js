@@ -68,6 +68,8 @@ export const login = async (req, res, next) => {
         return res.status(400).json({message: "User don't exist"})
     }
 
+    console.log(existingUser)
+
     const isPasswordCorrect = password == existingUser.password ? true : false
     if(!isPasswordCorrect){
         return res.status(400).json({message:"Incorrect password"})

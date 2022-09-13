@@ -1,31 +1,55 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import {
+  Box,
+  Button,
+  TextField,
+  Typography
+} from '@mui/material'
+import React, {
+  useState
+} from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { authAction } from '../store'
-import { useNavigate } from 'react-router-dom'
+import {
+  useDispatch
+} from 'react-redux'
+import {
+  authAction
+} from '../store'
+import {
+  useNavigate
+} from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [isSignup] = useState(false)
+  const [isSignup, setIsSignup] = useState(false)
   const [inputs, setInputs] = useState({
-    name:"",
-    email:"",
-    password:"",
+    name: "",
+    email: "",
+    password: "",
   })
   const handleChange = (e) => {
     setInputs((prevState) => ({
-      ...prevState, 
-      [e.target.name] : e.target.value
+      ...prevState,
+      [e.target.name]: e.target.value
     }))
   }
 
-  const sendRequest = async (type="login") => {
-    const res = await axios.post(`http://localhost:5000/api/user/${type}`, {
+  const sendLogin = async () => {
+    const res = await axios.post(`http://localhost:5000/api/user/login`, {
       email: inputs.email,
       password: inputs.password
-    }).catch(err =>  console.log(err))
+    }).catch(err => console.log(err))
+
+    const data = await res.data
+    return data;
+  }
+
+  const sendSignup = async () => {
+    const res = await axios.post(`http://localhost:5000/api/user/signup`, {
+      name: inputs.name,
+      email: inputs.email,
+      password: inputs.password
+    }).catch(err => console.log(err))
 
     const data = await res.data
     return data;
@@ -34,14 +58,18 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(inputs)
-    if(isSignup){
-      sendRequest("signup").then((data) => localStorage.setItem("userId", data.user._id)).then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
-    }else{
-      sendRequest().then((data) => localStorage.setItem("userId", data.user._id)).then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
+    if (isSignup) {
+      sendSignup().then((data) => {
+        localStorage.setItem("userId", data.user._id)
+        localStorage.setItem("email", data.user.email)
+      }).then(() => dispatch(authAction.login())).then(() => navigate("/blogs")).then(data => console.log(data))
+    } else {
+      sendLogin().then((data) => {
+        localStorage.setItem("userId", data.user._id)
+        localStorage.setItem("email", data.user.email)
+      }).then(() => dispatch(authAction.login())).then(() => navigate("/blogs")).then(data => console.log(data))
     }
   }
-
-
 
   return (
     <div className="main">
@@ -62,10 +90,13 @@ const Login = () => {
           <TextField margin='normal' name="email" placeholder='Email' type={'email'} value={inputs.email} onChange={handleChange}/>
           <TextField margin='normal' name="password" placeholder='Password' type={'password'}  value={inputs.password} onChange={handleChange}/>
           <Button sx={{marginTop: '10px', borderRadius: '10px', background: 'orange'}} margin='normal' variant="contained" type="submit">{isSignup ? 'Sign Up' : 'Login'}</Button>
+          <Button sx={{marginTop: '10px', borderRadius: '10px', color: 'orange'}} margin='normal' type="submit" onClick={() => setIsSignup(!isSignup)}>{!isSignup ? 'No Account? Sign Up' : 'Already a member? Login'}</Button>
         </Box>
       </form>
     </div>
   )
+
+
 }
 
 export default Login

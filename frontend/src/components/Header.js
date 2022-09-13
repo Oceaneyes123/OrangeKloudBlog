@@ -21,8 +21,7 @@ export const Header = () => {
           </Box>
         }
         <Box display="flex" marginLeft="auto">
-          { !isLoggedIn &&   <Button LinkComponent={Link} to="/login" variant="contained" sx={{color: 'orange', background: 'white', margin: 1, borderRadius: 5}}>Login</Button>}
-          { !isLoggedIn && <Button LinkComponent={Link} to="/login" sx={{color: 'white', margin: 1,}}>Signup</Button> }
+          { !isLoggedIn &&   <Button LinkComponent={Link} to="/login" variant="contained" sx={{color: 'orange', background: 'white', margin: 1, borderRadius: 5}}>Login/Signup</Button> }
           { isLoggedIn &&  <Button LinkComponent={Link} to="/login" sx={{color: 'white', margin: 1,}} onClick={()=>dispatch(authAction.logout())}>Logout</Button> }
         </Box>
         </Toolbar>
