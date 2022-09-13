@@ -1,4 +1,5 @@
 import User from '../model/User'
+import Blog from '../model/Blog'
 
 
 export const getAllUsers = async (req, res, next) => {
@@ -244,3 +245,27 @@ export const getCommonFollowerList = async(req, res, next) => {
 }
 
 
+
+export const getBlogsByUser = async(req, res, next) => {
+    const {email, authorEmail} = req.body
+
+    let userBlogs
+    
+    try {
+        userBlogs = await User.findOne({email: authorEmail}).populate("blogs")
+    } catch (err) {
+        return console.log(err)
+    }
+
+    if(!userBlogs){
+        return res.status(404).json({message: "No Blogs Found"})
+    }
+    
+    let blogList = []
+
+    for(let i = 0; i < userBlogs.blogs.length; i++){
+        blogList.push(userBlogs.blogs[i].title)
+    }
+
+    return res.status(200).json({ success: true, blogs: blogList})
+}

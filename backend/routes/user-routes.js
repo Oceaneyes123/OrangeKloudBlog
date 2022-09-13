@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllUsers, signup, login, blockUser, getByEmail, followUser, getFollowerList, getCommonFollowerList} from '../controller/user-controller'
+import { getAllUsers, signup, login, blockUser, getByEmail, followUser, getFollowerList, getCommonFollowerList, getBlogsByUser} from '../controller/user-controller'
 
 const router = express.Router()
 
@@ -12,5 +12,6 @@ router.post("/getByEmail", getByEmail)
 router.post("/follow", followUser)
 router.get("/followerList", getFollowerList)
 router.get("/commonFollowerList", getCommonFollowerList)
+router.get("/getBlogsByUser", getBlogsByUser)
 
 export default router
