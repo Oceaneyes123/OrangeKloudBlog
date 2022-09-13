@@ -163,9 +163,6 @@ export const followUser = async(req, res, next) => {
     //followed user
     let followingId = existingUserToFollow._id.valueOf()
 
-    console.log(followerId)
-    console.log(followingId)
-
     let following = existingUser.following
     if(!following.includes(userToFollow)){
         following.push(userToFollow)
@@ -196,3 +193,54 @@ export const followUser = async(req, res, next) => {
 
     return res.status(200).json({success:true})
 }
+
+
+
+export const getFollowerList = async(req, res, next) => {
+    const {email} = req.body
+
+    let existingUser
+
+    try{
+        existingUser = await User.findOne({email: email})
+    } catch (err) {
+        console.log(err)
+    }
+
+    if(!existingUser){
+        return res.status(400).json({message: "No user of such name existed"})
+    }
+
+    return res.status(200).json({success:true, followers: existingUser.follower, count: existingUser.follower.length})
+}
+
+export const getCommonFollowerList = async(req, res, next) => {
+    const {email} = req.body
+
+    console.log(email)
+    let existingUsers
+
+    try{
+        existingUsers = await User.find({email: {$in : email}})
+    } catch (err) {
+        console.log(err)
+    }
+
+    let commonArray = []
+
+    for(let i = 0; i < existingUsers.length; i++){
+        commonArray.push(existingUsers[i].follower)
+    }
+
+    commonArray = commonArray.reduce((a, b) => a.filter(c => b.includes(c)))
+    
+    
+
+    if(!existingUsers){
+        return res.status(400).json({message: "No user of such name existed"})
+    }
+
+    return res.status(200).json({success:true, followers: commonArray, count: commonArray.length})
+}
+
+
