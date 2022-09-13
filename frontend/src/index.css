@@ -50,3 +50,9 @@ code {
 .follow-button{
   margin-left: 20px;
 }
+
+.following-text{
+  display: inline-block;
+  font-weight: 100;
+  font-size: smaller;
+}

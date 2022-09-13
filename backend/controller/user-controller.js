@@ -139,3 +139,60 @@ export const blockUser = async(req, res, next) => {
 
     return res.status(200).json({success:true})
 }
+
+
+export const followUser = async(req, res, next) => {
+    const {user, userToFollow} = req.body
+
+    let existingUser, updatedUser, existingUserToFollow, updatedUserToFollow
+
+    try{
+        existingUser = await User.findOne({email: user})
+        existingUserToFollow = await User.findOne({email: userToFollow})
+    } catch (err) {
+        console.log(err)
+    }
+
+    if(!existingUser){
+        return res.status(400).json({message: "No user of such name existed"})
+    }
+
+    //id of user that will follow other user
+    let followerId = existingUser._id.valueOf()
+
+    //followed user
+    let followingId = existingUserToFollow._id.valueOf()
+
+    console.log(followerId)
+    console.log(followingId)
+
+    let following = existingUser.following
+    if(!following.includes(userToFollow)){
+        following.push(userToFollow)
+    }else{
+        console.log("Already Followed")
+    }
+
+    let follower = existingUserToFollow.follower
+    if(!follower.includes(user)){
+        follower.push(user)
+    }else{
+        console.log("Already a follower")
+    }
+ 
+
+    try{
+       updatedUser = await User.findByIdAndUpdate(followerId, {following: following})
+       updatedUserToFollow = await User.findByIdAndUpdate(followingId, {follower: follower})
+    }catch (err) {
+        console.log(err)
+    }
+    
+   
+
+    if(!updatedUser && !updatedUserToFollow){
+        return res.status(400).json({message: "Error Update"})
+    }
+
+    return res.status(200).json({success:true})
+}

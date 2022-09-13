@@ -24,8 +24,16 @@ const userSchema = new Schema({
             required: true
         }
     ],
-    following: [],
-    follower: [],
+    following: [
+        {
+            type: String
+        }
+    ],
+    follower: [
+        {
+            type: String
+        }
+    ],
     block: [
         {
             type: String
