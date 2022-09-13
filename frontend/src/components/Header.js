@@ -16,7 +16,7 @@ export const Header = () => {
           <Box display="flex" marginLeft="auto" marginRight="auto">
             <Tabs  textColor='inherit' value={value} onChange={(e, val) => setValue(val)}>
               <Tab LinkComponent={Link} to="/blogs" label="All Blogs"/>
-              <Tab LinkComponent={Link} to="/myBlogs" label="My Blogs"/>
+              <Tab LinkComponent={Link} to="/blogs/add" label="Add Blogs"/>
             </Tabs>
           </Box>
         }
