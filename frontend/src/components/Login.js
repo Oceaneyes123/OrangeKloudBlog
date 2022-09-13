@@ -35,9 +35,9 @@ const Login = () => {
     e.preventDefault()
     console.log(inputs)
     if(isSignup){
-      sendRequest("signup").then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
+      sendRequest("signup").then((data) => localStorage.setItem("userId", data.user._id)).then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
     }else{
-      sendRequest().then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
+      sendRequest().then((data) => localStorage.setItem("userId", data.user._id)).then(()=>dispatch(authAction.login())).then(()=>navigate("/blogs")).then(data => console.log(data))
     }
   }
 
