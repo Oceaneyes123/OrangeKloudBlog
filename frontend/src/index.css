@@ -23,6 +23,7 @@ code {
   flex-direction: column;
   border: 1px solid #ccc;
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 .blog-container{
