@@ -7,7 +7,7 @@
 
 https://orange-kloud-blog.herokuapp.com/api
 ```
-
+This is an example link - [View API](https://orange-kloud-blog.herokuapp.com/api/blog)
 <br>
 
 ### 1. Authentication
