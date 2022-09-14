@@ -13,6 +13,7 @@ https://orange-kloud-blog.herokuapp.com/api
 ### 1. Authentication
 
 <br>
+
 ##### A. LOGIN
 |Method|URL|PARAMETER |
 |----|----|-----|
@@ -29,8 +30,9 @@ https://orange-kloud-blog.herokuapp.com/api
 ### 2. User
 
 <br>
+
 ##### A. GET ALL USER
-|Method|URL|PARAMETER |
+|Method|URL|PARAMETER|
 |----|----|-----|
 |GET|/user|  |
 
