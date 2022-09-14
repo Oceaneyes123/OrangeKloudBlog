@@ -35,7 +35,7 @@ const Login = () => {
   }
 
   const sendLogin = async () => {
-    const res = await axios.post(`http://localhost:5000/api/user/login`, {
+    const res = await axios.post(`https://orange-kloud-blog.herokuapp.com/api/user/login`, {
       email: inputs.email,
       password: inputs.password
     }).catch(err => console.log(err))
@@ -45,7 +45,7 @@ const Login = () => {
   }
 
   const sendSignup = async () => {
-    const res = await axios.post(`http://localhost:5000/api/user/signup`, {
+    const res = await axios.post(`https://orange-kloud-blog.herokuapp.com/api/user/signup`, {
       name: inputs.name,
       email: inputs.email,
       password: inputs.password

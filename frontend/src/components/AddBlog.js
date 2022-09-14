@@ -18,7 +18,7 @@ const AddBlog = () => {
   }
 
   const sendRequest = async () => {
-    const res = await axios.post("http://localhost:5000/api/blog/add",
+    const res = await axios.post("https://orange-kloud-blog.herokuapp.com/api/blog/add",
     {
       title: inputs.title,
       description: inputs.description,

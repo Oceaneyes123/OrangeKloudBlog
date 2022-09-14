@@ -7,7 +7,7 @@ const Blog = ({title, description, userName, user}) => {
     const [followedEmail, setFollowedEmail] = useState([]);
 
     const blockUser = async () => {
-        const res = await axios.post("http://localhost:5000/api/user/block", {
+        const res = await axios.post("https://orange-kloud-blog.herokuapp.com/api/user/block", {
                 user: localStorage.getItem("email"),
                 userToBlock: user.email
         }).then(data => console.log(data))
@@ -18,7 +18,7 @@ const Blog = ({title, description, userName, user}) => {
     }
 
     const followUser = async () => {
-        const res = await axios.post("http://localhost:5000/api/user/follow", {
+        const res = await axios.post("https://orange-kloud-blog.herokuapp.com/api/user/follow", {
                 user: localStorage.getItem("email"),
                 userToFollow: user.email
         }).then(data => console.log(data))
@@ -29,7 +29,7 @@ const Blog = ({title, description, userName, user}) => {
     }
 
     const getUserByEmail = async () => {
-        const res = await axios.post("http://localhost:5000/api/user/getByEmail", {
+        const res = await axios.post("https://orange-kloud-blog.herokuapp.com/api/user/getByEmail", {
             email: JSON.parse(localStorage.getItem("user")).email
         }).then(data => {
             console.log(data.data.user)
